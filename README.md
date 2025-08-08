@@ -2,7 +2,9 @@
 
 Aplikasi Flutter untuk mengontrol ESP32 melalui Bluetooth Low Energy (BLE). Aplikasi ini memungkinkan Anda untuk terhubung ke ESP32 dan mengontrol LED secara wireless.
 
-<img src="assets/images/preview-app.jpeg" alt="Preview Aplikasi" width="400" />
+<div align="center">
+  <img src="assets/images/preview-app.jpeg" alt="Preview Aplikasi" width="300" />
+</div>
 
 ## 🚀 Fitur
 
@@ -36,6 +38,22 @@ Aplikasi ini menggunakan UUID khusus untuk komunikasi dengan ESP32. Pastikan kod
 // Characteristic UUID - harus sama dengan ledCharacteristicUUID di BLEConstants
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 ```
+
+### 📁 Lokasi Kode Arduino
+
+Kode program untuk ESP32 tersedia di file berikut:
+
+arduino/esp32-sketch.ino
+
+Buka file tersebut dengan Arduino IDE, kemudian upload ke ESP32 seperti biasa.
+
+#### Cara Upload:
+
+1. Buka `arduino/esp32-sketch.ino` di Arduino IDE
+2. Pilih board: `ESP32 Dev Module` (atau board sesuai yang Anda gunakan)
+3. Hubungkan ESP32 ke komputer via USB
+4. Klik tombol **Upload**
+
 
 ### Mengubah UUID (Opsional)
 

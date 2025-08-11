@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ble_esp32/view/splash_init_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'constants/app_colors.dart';
 import 'view/ble_control_page.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: const BLEControlPage(),
+      home: const SplashInitPage(),
     );
   }
 }

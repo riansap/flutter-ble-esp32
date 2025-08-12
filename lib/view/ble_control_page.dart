@@ -9,6 +9,7 @@ import '../widgets/bluetooth_status_section.dart';
 import '../widgets/status_section.dart';
 import '../widgets/control_section.dart';
 import '../widgets/device_list_section.dart';
+import 'detail_app_page.dart';
 
 /// Halaman utama untuk kontrol BLE ESP32
 class BLEControlPage extends StatefulWidget {
@@ -119,7 +120,24 @@ class _BLEControlPageState extends State<BLEControlPage> {
           ),
         ),
       ),
-      trailing: ConnectionStatusIndicator(controller: _controller),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ConnectionStatusIndicator(controller: _controller),
+          const SizedBox(width: 8),
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (context) => const DetailAppPage(),
+              ),
+            ),
+            child: const Icon(
+              CupertinoIcons.info_circle,
+              color: AppColors.primaryDark,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -128,16 +146,29 @@ class _BLEControlPageState extends State<BLEControlPage> {
       return _buildLoadingView();
     }
 
-    return Column(
-      children: [
-        // BluetoothStatusSection(
-        //   controller: _controller,
-        //   permissionService: _permissionService,
-        // ),
-        StatusSection(controller: _controller),
-        ControlSection(controller: _controller),
-        DeviceListSection(controller: _controller),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(8),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  StatusSection(controller: _controller),
+                  ControlSection(controller: _controller),
+                  Expanded(
+                    child: DeviceListSection(controller: _controller),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

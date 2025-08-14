@@ -132,35 +132,39 @@ class DeviceListSection extends StatelessWidget {
 
   Widget _buildEmptyDeviceList() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            CupertinoIcons.bluetooth,
-            size: 48,
-            color: AppColors.disabled,
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Tidak ada perangkat ditemukan',
-            style: GoogleFonts.robotoMono(
-              textStyle: TextStyle(
-                color: AppColors.disabled,
-                fontSize: 16,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              CupertinoIcons.bluetooth,
+              size: 48,
+              color: AppColors.disabled,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Tidak ada perangkat ditemukan',
+              style: GoogleFonts.robotoMono(
+                textStyle: TextStyle(
+                  color: AppColors.disabled,
+                  fontSize: 16,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            'Tekan tombol Scan untuk mencari',
-            style: GoogleFonts.robotoMono(
-              textStyle: TextStyle(
-                color: AppColors.disabled,
-                fontSize: 14,
+            SizedBox(height: 8),
+            Text(
+              'Tekan tombol Scan untuk mencari',
+              style: GoogleFonts.robotoMono(
+                textStyle: TextStyle(
+                  color: AppColors.disabled,
+                  fontSize: 14,
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }

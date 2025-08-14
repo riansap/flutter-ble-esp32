@@ -5,7 +5,6 @@ import '../controllers/ble_controller.dart';
 import '../constants/app_colors.dart';
 import '../services/bluetooth_permission_service.dart';
 import '../widgets/connection_status_indicator.dart';
-import '../widgets/bluetooth_status_section.dart';
 import '../widgets/status_section.dart';
 import '../widgets/control_section.dart';
 import '../widgets/device_list_section.dart';
@@ -47,9 +46,11 @@ class _BLEControlPageState extends State<BLEControlPage> {
   void _setupMessageListener() {
     _controller.messageStream.listen((message) {
       if (mounted) {
-        setState(() {
-          _lastMessage = message;
-        });
+        setState(
+          () {
+            _lastMessage = message;
+          },
+        );
         _showSnackBar(message);
       }
     });
@@ -61,7 +62,6 @@ class _BLEControlPageState extends State<BLEControlPage> {
     try {
       final success = await _controller.initializeBluetooth();
       if (!success) {
-        // Show Bluetooth status section untuk troubleshooting
         _showBluetoothStatusDialog();
       }
     } catch (e) {
@@ -148,24 +148,19 @@ class _BLEControlPageState extends State<BLEControlPage> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(8),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-            ),
-            child: IntrinsicHeight(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  StatusSection(controller: _controller),
-                  ControlSection(controller: _controller),
-                  Expanded(
-                    child: DeviceListSection(controller: _controller),
-                  ),
-                ],
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: constraints.maxHeight,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              StatusSection(controller: _controller),
+              ControlSection(controller: _controller),
+              DeviceListSection(
+                controller: _controller,
               ),
-            ),
+            ],
           ),
         );
       },
@@ -196,18 +191,33 @@ class _BLEControlPageState extends State<BLEControlPage> {
   void _showSnackBar(String message) {
     if (!mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message,
+    // Gunakan modal popup sebagai pengganti snackbar
+    showCupertinoModalPopup(
+      context: context,
+      builder: (ctx) => CupertinoActionSheet(
+        message: Text(message,
+            textAlign: TextAlign.center,
             style: GoogleFonts.robotoMono(
               textStyle: TextStyle(
-                color: AppColors.white,
+                color: AppColors.primaryDark,
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
             )),
-        duration: const Duration(seconds: 2),
-        backgroundColor: AppColors.primaryDark,
+        actions: [
+          CupertinoActionSheetAction(
+            child: Text('OK',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.robotoMono(
+                  textStyle: TextStyle(
+                    color: AppColors.primaryDark,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )),
+            onPressed: () => Navigator.of(ctx).pop(),
+          ),
+        ],
       ),
     );
   }

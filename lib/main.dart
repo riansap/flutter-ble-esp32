@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_ble_esp32/view/splash_init_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'constants/app_colors.dart';
-import 'view/ble_control_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   await Future.delayed(Duration(seconds: 2));
 
